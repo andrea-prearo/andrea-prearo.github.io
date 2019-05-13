@@ -2,7 +2,7 @@
 layout: post
 title: "Protocol Oriented Programming in Swift"
 date: 2016-02-01
-categories: [iOS App Development, Design Patterns, Swift, Object Oriented, Software Architecture]
+categories: [iOS, Mobile App Development, Design Patterns, Swift, Object Oriented, Software Architecture]
 ---
 In this post we are going to take a look at some common issues with application design. We’ll delve into the limitations of classical Object-Oriented Programming and how we can address those using a different approach. In particular, we’ll examine which patterns are currently available in Swift to follow such an approach.
 

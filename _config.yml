@@ -16,7 +16,7 @@
 title: Andrea Prearo
 email: andrea.prearo@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
-  Musing on Software Development
+  Musings on Software Development
 
 # baseurl: "" # the subpath of your site, e.g. /blog
 # url: "" # the base hostname & protocol for your site, e.g. http://example.com
