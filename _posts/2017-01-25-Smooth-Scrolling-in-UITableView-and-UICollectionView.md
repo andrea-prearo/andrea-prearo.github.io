@@ -168,7 +168,6 @@ class UserViewModelController {
         guard index >= 0 && index < viewModelsCount else { return nil }
         return viewModels[index]
     }
-
 }
 
 private extension UserViewModelController {
@@ -347,7 +346,7 @@ override func viewDidLoad() {
 
 * <em>Pre-calculating all the row heights at once.</em>
 
-* <em>Return the cached value when `tableView(_:heightForRowAt:)` is called.</em>
+* <em>Return the cached value when [`tableView(_:heightForRowAt:)`](https://developer.apple.com/reference/uikit/uitableviewdelegate/1614998-tableview) is called.</em>
 
 ## Tips Specific to UICollectionView ##
 

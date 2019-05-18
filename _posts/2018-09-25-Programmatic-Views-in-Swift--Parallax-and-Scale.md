@@ -235,7 +235,9 @@ class MainViewController: UIViewController {
 
 Inside `viewDidLoad` we first create the views, then properly add them to the view controller and finally set the Autolayout constraints.
 
+<em>
 **WARNING**: Remember to add your views to the main view controller before calling the code to set the constraints! If you don’t do that the app will crash because Autolayout is not able to find the expected view hierarchy and you’ll see an error message similar to the following:
+</em>
 
 ~~~
 *** Terminating app due to uncaught exception 'NSGenericException', reason: 'Unable to activate constraint with anchors <NSLayoutYAxisAnchor:0x608000268d00 "UILabel:0x7fd8a1b04890'Your content here'.top"> and <NSLayoutYAxisAnchor:0x608000268980 "UIView:0x7fd89fc19d30.bottom"> because they have no common ancestor.  Does the constraint or its anchors reference items in different view hierarchies?  That's illegal.'

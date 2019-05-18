@@ -6,7 +6,7 @@ categories: [iOS, Mobile App Development, Swift, Programming]
 ---
 In this post we are going to examine the differences between reference and value types. We’ll introduce both concepts, take a look at their strengths and weaknesses, and examine how we can take advantage of them in Swift.
 
-# Reference Types #
+## Reference Types ##
 
 > Reference type: a type that once initialized, when assigned to a variable or constant, or when passed to a function, returns a reference to the same existing instance.
 
@@ -26,7 +26,7 @@ class PersonClass {
 var person = PersonClass(name: "John Doe")
 ~~~
 
-# Value Types #
+## Value Types ##
 
 > Value type: a type that creates a new instance (copy) when assigned to a variable or constant, or when passed to a function.
 
@@ -34,7 +34,7 @@ A typical example of a value type is a primitive type. Common primitive types, t
 
 The most common value types in Swift are *structs*, *enums* and *tuples* can be value types. Value types assignment is said to have deep copy semantics.
 
-# Copy Semantics #
+## Copy Semantics ##
 
 I am going to illustrate the difference between copy semantics through a practical example. Suppose we are working with a generic tree data structure:
 
@@ -64,19 +64,19 @@ tree.add(13)
 
 Now, let’s take a look at the different behaviors of copy semantics.
 
-# Shallow copy (reference types) #
+## Shallow copy (reference types) ##
 
 When copying reference types, the Swift compiler copies the reference of the instance. But not its properties. Hence, when creating multiple copies of a reference type object each copy will share the same data, represented by the instance properties.
 
 ![Binary tree shallow copy](/assets/2016-07-14-Reference-and-Value-Types-in-Swift/Image2.jpeg)
 
-# Deep copy (value types) #
+## Deep copy (value types) ##
 
 When copying value types, the Swift compiler makes a brand new copy of the original instance. This means all original instance properties are copied into a new one. This process is replicated for each property which is a value type itself. Hence, when creating multiple copies of a value type object each copy will be a new separate instance with no shared data.
 
 ![Binary tree deep copy](/assets/2016-07-14-Reference-and-Value-Types-in-Swift/Image3.jpeg)
 
-# The Issue With Reference Type Instances: Implicit Data Sharing #
+## The Issue With Reference Type Instances: Implicit Data Sharing ##
 
 In order to show a typical issue with reference types, let’s define a class to represent a point in a 2D space.
 
@@ -127,7 +127,7 @@ Now, `pointB` would have its own separate reference and there will be no more sh
 
 * It is easy to forget to call `copy()` for each assignment.
 
-# Value Type Instances: No Implicit Sharing #
+## Value Type Instances: No Implicit Sharing ##
 
 When assigning value types, the compiler will automatically create (and return) a copy of the instance. Let’s see what happens if, instead of defining our 2D point as a class (reference type), we make it a struct (value type).
 
@@ -193,7 +193,7 @@ Now, because `view` is a reference type, what happens is that both instances of 
 
 ![Value type containing a reference type](/assets/2016-07-14-Reference-and-Value-Types-in-Swift/Image7.jpeg)
 
-# Reference Types, Value Types and Immutability #
+## Reference Types, Value Types and Immutability ##
 
 > Immutability: the property of an instance whose state cannot be modified after it is created.
 
@@ -213,7 +213,7 @@ In Swift, we can define variables using two different keywords:
 
 The above keywords have different behaviors, depending on whether they are used for reference or value types.
 
-# Mutable Instances: `var` #
+# Mutable Instances: *var* #
 
 **Reference types**
 
@@ -223,7 +223,7 @@ The reference can be changed (*mutable*): you can mutate the instance itself and
 
 The instance can be changed (*mutable*): you can change the properties of the instance.
 
-# Immutable Instances: `let` #
+# Immutable Instances: *let* #
 
 **Reference types**
 
@@ -233,7 +233,7 @@ The reference remains constant (*immutable*): you can’t change the instance re
 
 The instance remains constant (*immutable*): you can’t change the properties of the instance, regardless whether a property is declared with `let` or `var`.
 
-# Which Type Should You Choose? #
+## Which Type Should You Choose? ##
 
 A very common question is: *“How can I decide when to use reference types and when to use value types?”*. You can find a lot of discussions about that over the Internet. Some of my favorite examples are:
 * [Should I use a Swift struct or a class?](http://faq.sealedabstract.com/structs_or_classes/)
@@ -241,7 +241,7 @@ A very common question is: *“How can I decide when to use reference types and 
 * [A Warm Welcome to Structs and Value Types](https://www.objc.io/issues/16-swift/swift-classes-vs-structs/)
 * [RE: Should I use a Swift struct or a class?](http://owensd.io/blog/re-should-i-use-a-swift-struct-or-a-class/)
 * [Structs vs Classes](http://troz.net/2016/03/structs-vs-classes/)
-* [Reference vs Value Types in Swift: Part 1/2](https://www.mikeash.com/pyblog/friday-qa-2015-07-17-when-to-use-swift-structs-and-classes.html)
+* [Reference vs Value Types in Swift](https://www.raywenderlich.com/9481-reference-vs-value-types-in-swift)
 
 As a basic rule, we are forced to create reference types every time we are subclassing from `NSObject`. This is a common scenario when interacting with the Cocoa SDK. There are some common rules, [provided by Apple](https://developer.apple.com/swift/blog/?id=10), for using reference types versus value types. I have summarized them below.
 
@@ -266,7 +266,7 @@ By taking a look at the Swift Standard Library reference it is possible to gathe
 
 Aside from what is illustrated above, the choice really depends on what you are trying to implement. As a rule of thumb, if there is no specific constraint that forces you to opt for a reference type, or you are not sure which option is best for your specific use case, you could start by implementing your data structure using a value type. If needed, you should be able to convert it to a reference type later with relatively little effort.
 
-# Conclusion #
+## Conclusion ##
 
 You can download a playground with the code from this post [here](https://github.com/andrea-prearo/SwiftPlaygrounds/tree/master/ReferenceAndValueTypes).
 

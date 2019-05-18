@@ -4,9 +4,9 @@ title: "Boost Smooth Scrolling with iOS 10 Pre-Fetching API"
 date: 2017-04-03
 categories: [iOS, Mobile App Development, Swift]
 ---
-In a [previous post](https://medium.com/capital-one-developers/smooth-scrolling-in-uitableview-and-uicollectionview-a012045d77f#), we explored some common strategies to achieve smooth scrolling in our iOS mobile apps. The main goal of applying those strategies was to avoid *choppy scrolling*, a common issue that negatively affects the user experience. To help developers with such a task, Apple made some very useful changes to `UICollectionView` in iOS10. But before reviewing this newly introduced functionality, let’s start by examining what prompted the need for them.
+In a [previous post](https://andrea-prearo.github.io/ios/mobile%20app%20development/swift/2017/01/25/Smooth-Scrolling-in-UITableView-and-UICollectionView.html), we explored some common strategies to achieve smooth scrolling in our iOS mobile apps. The main goal of applying those strategies was to avoid *choppy scrolling*, a common issue that negatively affects the user experience. To help developers with such a task, Apple made some very useful changes to `UICollectionView` in iOS10. But before reviewing this newly introduced functionality, let’s start by examining what prompted the need for them.
 
-# What Causes Scrolling to Be Choppy? #
+## What Causes Scrolling to Be Choppy? ##
 
 Have you ever interacted with, or worked on an app that occasionally had choppy scrolling? If the answer is “yes”, then you know how disappointing it is when you try to scroll quickly and the app content appears to stutter. You may have asked yourself what was triggering such choppy scrolling behavior and the bad user experience that comes with it.
 
@@ -33,7 +33,7 @@ The most common source of dropped frames is loading expensive data models for a 
 
 With iOS10, Apple introduced some optimizations in the way cells are loaded and displayed. Let’s take a look at the improvements available with iOS10 and how they make it easier for developers to create smooth scrolling user experiences.
 
-# Cell Lifecycle in iOS9 #
+## Cell Lifecycle in iOS9 ##
 
 The lifecycle of a `UICollectionViewCell` can be visualized as follows:
 
@@ -47,7 +47,7 @@ The main interactions between the collection view and its cells are:
 
 * The collection view is removing the cell — *the cell is outside the visible field*: [`collectionView(didEndDisplaying:forItemAt:)`](https://developer.apple.com/reference/uikit/uicollectionviewdelegate/1618006-collectionview).
 
-# Cell Lifecycle in iOS10 #
+## Cell Lifecycle in iOS10 ##
 
 In iOS10, the lifecycle of a cell is mostly the same as in iOS9. However, there are a few significant differences.
 
@@ -75,13 +75,13 @@ When a row of cells is entering the visible field, the cells are displayed as a 
 
 This difference in loading multi-column layouts is at the core of the most important iOS10 `UICollectionView` optimization: *Pre-Fetching*. Let’s explore it in more detail.
 
-# Pre-Fetching API #
+## Pre-Fetching API ##
 
 When presenting iOS10, Apple touted [**Pre-Fetching**](https://developer.apple.com/videos/play/wwdc2016/219/) as an *Adaptive Technology*. What this means is that *Pre-Fetching* will try take advantage of how users interact with the app to perform some optimizations targeted to improve scrolling performances. For instance, this new technology will look for idle times (when the user is scrolling slowly, or not scrolling at all) to load (*Pre-Fetch*) new cells. Depending on user scrolling patterns, there may be more (or less) opportunities for *Pre-Fetching* to perform such an optimization.
 
 Before reviewing the available API, let’s take a look at some best practices to work with this technology. In order to fully take advantage of *Pre-Fetching*, the bulk of setting up cell content must be performed in `collectionView(_:cellForItemAt:)`. Operations performed in `collectionView(_:willDisplay:forItemAt:)` and `collectionView(didEndDisplaying:forItemAt:)` should be kept minimal and must be non-CPU intensive. Even better, it would be optimal if we could perform no operation at all for those lifecycle events! Also, keep in mind that, even if `collectionView(_:cellForItemAt:)` gets called for a cell, it is still possible that the cell will never be displayed.
 
-Some very good news is that *Pre-Fetching* is enabled by default for apps compiled on iOS10. It is, however, possible to turn this feature off by setting the `isPrefetchingEnabled` property of `UICollectionView` to false. It is also important to note that *Pre-Fetching* works alongside the cell lifecycle. This means that the code we already wrote to implement a collection view doesn’t need to be changed - the only action required to take full advantage of *Pre-Fetching* is to implement the *Pre-Fetching API*.
+Some very good news is that *Pre-Fetching* is enabled by default for apps compiled on iOS10. It is, however, possible to turn this feature off by setting the `isPrefetchingEnabled` property of `UICollectionView` to `false`. It is also important to note that *Pre-Fetching* works alongside the cell lifecycle. This means that the code we already wrote to implement a collection view doesn’t need to be changed - the only action required to take full advantage of *Pre-Fetching* is to implement the *Pre-Fetching API*.
 
 # Pre-Fetching API and UICollectionView #
 

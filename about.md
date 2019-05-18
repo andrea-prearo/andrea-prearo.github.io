@@ -6,6 +6,9 @@ permalink: /about/
 
 I'm an iOS Engineer and Software Craftsman.
 
+<br>
+<br>
+<br>
 
 ---
 **Opinion Disclaimer**

@@ -12,7 +12,7 @@ Recently, I have been working on implementing a caching mechanism for an iOS app
 
 This task has been an interesting learning experience. So, I decided to go back to [one of my sample apps](https://github.com/andrea-prearo/SwiftExamples/tree/master/SmoothScrolling/Client) to illustrate how it is possible to make data models support `Codable` and work with Core Data.
 
-# The model: `NSManagedObject` and `Codable` #
+## The model: *NSManagedObject* and *Codable* ##
 
 The sample app I started from has only one simple model, `User`, illustrated below:
 
@@ -50,15 +50,15 @@ struct User {
 
 In order to be able to store instance of `User` in Core Data, a few changes are required.
 
-# Convert from `struct` to `class` #
+# Convert from *struct* to *class* #
 
 The first step to make the User model work with Core Data is to make it inherit from [`NSMangedObject`](https://developer.apple.com/documentation/coredata/nsmanagedobject). This requires declaring `User` as a class, instead of a struct, because `NSManagedObject` inherits from `NSObject` (which is the ancestor of most Objective-C classes).
 
-Use primitive data types
+# Use primitive data types #
 
 Using primitive data types makes it easier for model properties to be stored in Core Data. For sake of simplicity, then, we will change `role` to be a `String` type instead of an `enum`.
 
-# Declare properties as `@NSManaged var` #
+# Declare properties as *@NSManaged var* #
 
 We need to declare all properties that will be stored in Core Data as `@NSManaged var`. This is required to allow Core Data to correctly access such properties.
 
@@ -249,7 +249,7 @@ try managedObjectContext.save()
 
 This is the second, and last, main difference compared to what we usually do when working with `Codable` alone. Once the `parse` method is successfully executed all the `User` instances retrieved from the JSON response will have been saved and will be accessible in our Core Data persistent storage.
 
-# Core Data as a caching mechanism #
+## Core Data as a caching mechanism ##
 
 This new sample app requires only one model, which makes the database structure embarrassingly simple:
 

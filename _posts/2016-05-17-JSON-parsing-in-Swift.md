@@ -7,7 +7,8 @@ categories: [iOS, Mobile App Development, Swift, Protocol Oriented, JSON, Parsin
 Parsing JSON is a very common task for iOS developers. But the functionality provided out-of-the-box by the Foundation framework is very basic. There are many Open Source libraries available that implement higher level functionality and promise to make this task easier and safer.
 
 As a personal experiment I tried to implement my own JSON parsing library, modeled after a couple of approaches I really like. My implementation is intended to be very minimalistic and focused on a generic protocol based approach that should allow to parse JSON content, and store it in appropriate containers (`class` or `struct` instances), with a minimum amount of code. In order to keep complexity minimal, there will be no particular error handling: in the unfortunate scenario where parsing a specific JSON key fails the corresponding stored value will be nil.
-The out-of-the-box solution
+
+## The out-of-the-box solution ##
 
 Let’s assume we need to interact with a Web Service that returns JSON content structured as follows:
 
@@ -36,7 +37,8 @@ Let’s assume we need to interact with a Web Service that returns JSON content 
 ~~~
 
 This strategy works fine but it is a little tedious. In particular, you need to downcast the content (as optional) specifying the expected type every time you extract the value from a dictionary key.
-A generic protocol for parsing JSON: JSONDecodable
+
+## A generic protocol for parsing JSON: *JSONDecodable* ##
 
 Instead of having to manipulate the JSON content as above, I am going to illustrate a very simplistic way to use a more concise syntax to perform the same task. The proposed approach is based on the following steps:
 1. Define a protocol to easily parse JSON content into properly designed containers (`class` or `struct` instances).
@@ -91,11 +93,11 @@ We should be able to parse any kind of JSON content by implementing the four pro
 static func decode(json: JSON) -> DecodableType?
 ~~~
 
-The implementation of this method depends on the specific JSON content we need to parse. Basically, each container (`class` or `struct`) will have to describe how to retrieve its property values from the JSON content by providing the mapping between its properties and the keys of the JSON object containing the required data. This will in turn make parsing JSON content a matter of defining some appropriate containers that map 1:1 to the objects represented in the JSON data. By implementing the `decode` method appropriately (as we will see in [Part II](./ios/mobile%20app%20development/swift/functional%20programming/json/parsing/2016/06/01/JSON-parsing-in-Swift.html) of this article), we will be able to instruct the top level container to start the parsing process and make sure that each nested container will in turn continue such process, by means of its specific `decode` method, until we have parsed the entire content.
+The implementation of this method depends on the specific JSON content we need to parse. Basically, each container (`class` or `struct`) will have to describe how to retrieve its property values from the JSON content by providing the mapping between its properties and the keys of the JSON object containing the required data. This will in turn make parsing JSON content a matter of defining some appropriate containers that map 1:1 to the objects represented in the JSON data. By implementing the `decode` method appropriately (as we will see in [Part II](https://andrea-prearo.github.io/ios/mobile%20app%20development/swift/functional%20programming/json/parsing/2016/06/01/JSON-parsing-in-Swift.html) of this article), we will be able to instruct the top level container to start the parsing process and make sure that each nested container will in turn continue such process, by means of its specific `decode` method, until we have parsed the entire content.
 
 Now that we have defined the protocol [1.] for parsing JSON content, let’s take a look at the next step: define the containers that will store the parsed data [2.].
 
-# Define containers for storing JSON content #
+## Define containers for storing JSON content ##
 
 This step depends on the specific JSON content we want to parse, as the container will have to be modeled appropriately. Keeping in mind the JSON sample shown at the beginning of this article, let’s take a l0ok at the definition of the containers we will need in order to correctly parse it:
 
@@ -142,15 +144,15 @@ In order to make the container code cleaner and easier to read, the required met
 static func decode(json: JSON) -> DecodableType?
 ~~~
 
-will be implemented in a protocol extension (as we’ll see in [Part II](./ios/mobile%20app%20development/swift/functional%20programming/json/parsing/2016/06/01/JSON-parsing-in-Swift.html)).
+will be implemented in a protocol extension (as we’ll see in [Part II](https://andrea-prearo.github.io/ios/mobile%20app%20development/swift/functional%20programming/json/parsing/2016/06/01/JSON-parsing-in-Swift.html)).
 
-# Next #
+## Next ##
 
-In [Part II](./ios/mobile%20app%20development/swift/functional%20programming/json/parsing/2016/06/01/JSON-parsing-in-Swift.html) we will examine the remaining steps:
+In [Part II](https://andrea-prearo.github.io/ios/mobile%20app%20development/swift/functional%20programming/json/parsing/2016/06/01/JSON-parsing-in-Swift.html) we will examine the remaining steps:
 * Define the mapping between JSON keys and container properties [3.]
 * Apply functional concepts to to simplify the parsing syntax [4.].
 
-# References #
+## References ##
 
 [The Swift Programming Language (Swift 2.2): Generics](https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/Generics.html)
 [Swift: Associated Types](http://www.russbishop.net/swift-associated-types)

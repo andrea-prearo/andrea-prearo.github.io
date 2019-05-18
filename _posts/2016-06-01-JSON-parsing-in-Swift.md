@@ -4,13 +4,13 @@ title: "JSON parsing in Swift — Part II: a functional approach to JSON par
 date: 2016-06-01
 categories: [iOS, Mobile App Development, Swift, Functional Programming, JSON, Parsing]
 ---
-In this second part of the article we will continue the discussion started in [Part I](./ios/mobile%20app%20development/swift/protocol%20oriented/json/parsing/2016/05/17/JSON-parsing-in-Swift.html) and examine the remaining steps to implement the proposed approach to JSON parsing:
+In this second part of the article we will continue the discussion started in [Part I](https://andrea-prearo.github.io/ios/mobile%20app%20development/swift/protocol%20oriented/json/parsing/2016/05/17/JSON-parsing-in-Swift.html) and examine the remaining steps to implement the proposed approach to JSON parsing:
 * Define the mapping between JSON keys and container properties [3.].
 * Apply functional concepts to to simplify the parsing syntax [4.].
 
 Let’s get started!
 
-# Define the mapping between JSON keys and container properties #
+## Define the mapping between JSON keys and container properties ##
 
 In order to make the container code cleaner and easier to read, the required method
 
@@ -22,7 +22,7 @@ will be implemented in a protocol extension.
 
 Because the mapping between JSON keys and container properties [3.] and the parsing syntax [4.] are tightly coupled, we are going to examine the details for both, at the same time, in each of the following Parsing Syntax Steps.
 
-# JSON Parsing Syntax Step 1: parse<Type> functions #
+## JSON Parsing Syntax Step 1: parse<Type> functions ##
 
 Before diving into our parsing code, let’s introduce a couple of functions that will help us to improve code readability:
 
@@ -110,7 +110,7 @@ extension LocationData: JSONDecodable {
 
 In this first step we encapsulated both the type casting and the parsing logic by means a set of specific functions. The code is cleaner than the explicit cast, but we can do better. Let’s make another step towards a cleaner syntax.
 
-# JSON type simplification #
+## JSON type simplification ##
 
 Before we dive into the details of the next parsing step, let’s start with a way to simplify working with JSON. We are going declare a `typealias` to avoid having to cast the parsed JSON content to `[String: AnyObject]` over and over:
 
@@ -124,7 +124,7 @@ This type definition will allow us to extract data from parsed JSON content, as 
 let locations = json["locations"]
 ~~~
 
-# JSON Parsing Syntax Step 2: `JSONParse<T>` binding #
+## JSON Parsing Syntax Step 2: *JSONParse\<T\>* binding ##
 
 As in the previous step, before diving into our parsing code, let’s introduce a function that will help us to improve code readability:
 
@@ -190,7 +190,7 @@ static func decode(json: JSON) -> LocationData? {
 
 In this second step we let the compiler take care of both the type casting and the parsing logic by means of a generic function and a functional operator. The resulting code looks much cleaner than before. But we can do even better!
 
-# JSON Parsing Syntax Step 3: `<|` operator #
+## JSON Parsing Syntax Step 3: <| operator ##
 
 In this last step we are going to introduce another couple of functional operators that will make the parsing code even cleaner. Here they are:
 
@@ -238,7 +238,7 @@ extension LocationData: JSONDecodable {
 
 At this point, the syntax required to parse JSON is much cleaner than it was in the initial implementation. It is true that it may appear more cryptic and maybe a little *“magical”*. But, in my opinion, this is an acceptable trade-off.
 
-# Conclusion #
+## Conclusion ##
 
 Most of what I’ve described above has already been discussed in older posts (see **References**). But, nevertheless, I found it very interesting to implement the steps to improve the parsing syntax myself. My main takeaways from this experiment are:
 
@@ -250,7 +250,7 @@ Most of what I’ve described above has already been discussed in older posts (s
 
 I’ve created a small library, [LiteJSONConvertible](https://github.com/andrea-prearo/LiteJSONConvertible), to make the full code for my exploration of JSON parsing with Swift easily available.
 
-# References #
+## References ##
 
 [Efficient JSON in Swift with Functional Concepts and Generics](https://robots.thoughtbot.com/efficient-json-in-swift-with-functional-concepts-and-generics)
 [Real World JSON Parsing with Swift](https://robots.thoughtbot.com/real-world-json-parsing-with-swift)

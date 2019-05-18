@@ -8,7 +8,7 @@ In the vast majority of iOS apps I’ve been working on, table views and collect
 
 In this post, I am going to illustrate the approach I have been using for some time to reduce the amount of boilerplate required for setting up collection views in my apps.
 
-# Table View vs Collection View #
+## Table View vs Collection View ##
 
 *“Why only talk about collection views and not table views?”* some of you may ask.
 
@@ -20,7 +20,7 @@ For the last few months, I have been using collection view in every instance whe
 
 I would like to point out that I am not suggesting that you should go through your codebase and re-implement all table views as collection views. What I am suggesting is that, if you need to add a new feature that requires displaying a list of items, you should consider using a collection view instead of a table view. Especially if you are working on a universal app, as a collection view will likely make it is easier to work with all screen sizes by dynamically adjusting the layout.
 
-# Swift Generics and the Search for Useful Abstractions #
+## Swift Generics and the Search for Useful Abstractions ##
 
 I have always been a fan of generic programming, so you can imagine I was pretty excited when Apple introduced generics in Swift. However, generics and protocols have not been working well together for some time. Then, with the introduction of [associated types](https://www.natashatherobot.com/swift-what-are-protocols-with-associated-types/) in Swift 2.x, creating generic protocols became much easier and many developers started experimenting with them.
 
@@ -30,7 +30,7 @@ I’d like to point out that what I have built is not a silver bullet. The abstr
 
 For the purpose of this post, I will present a few abstractions that cover the functionality that is commonly required when working with a collection view. This should be a good starting point to illustrate what you can build using generics and, in particular, generic protocols.
 
-# Collection View Cell Abstractions #
+## Collection View Cell Abstractions ##
 
 The first step I usually take in implementing a collection view is to create the cell that I am going to use to display the required data. What is always required when dealing with a cell in a collection view is to:
 
@@ -46,7 +46,7 @@ To simplify the above tasks, I created two protocols:
 
 Let’s take a look at the details of the above abstractions.
 
-# `ReusableCell` #
+# *ReusableCell* #
 
 The `ReusableCell` protocol requires you define a `reuseIdentifier` that will be used when dequeueing the cell. In my apps, I usually adopt the convention that the cell identifier is the same as the cell class name. Therefore, it is easy to abstract this away by creating a protocol extension that makes `reuseIdentifier` return a string with the class name:
 
@@ -62,7 +62,7 @@ public extension ReusableCell {
 }
 ~~~
 
-# ConfigurableCell #
+# *ConfigurableCell* #
 
 The `ConfigurableCell` protocol requires you implement a method that will be used to configure the cell using an instance of a specific type, which is declared as generic type `T`:
 
@@ -80,7 +80,7 @@ The `ConfigurableCell` protocol will be used when it is time to load cell conten
 
 2. The use of the associated type (`associatedtype T`) defines `ConfigurableCell` as a generic protocol.
 
-# Abstracting the Data Source: `CollectionDataProvider` #
+## Abstracting the Data Source: *CollectionDataProvider* ##
 
 Now, let’s go back for a moment to what is required to set up a collection view. In order for the collection view to display any content, we need to conform to the `UICollectionViewDataSource` protocol. The first steps usually required are related to specifying:
 
@@ -116,7 +116,7 @@ The first three methods in the protocol are:
 
 They map what is required to implement the above listed delegate methods of `UICollectionViewDataSource`. Since I had some use cases where I also needed to update the data source based on some user interaction, I ended up adding a fourth method (`updateItem(at: value:)`) that allows you to update the underlying data source if needed. Therefore, the methods declared in `CollectionDataProvider` are sufficient to encapsulate the common functionality that is required for conforming to `UICollectionViewDataSource`.
 
-# Encapsulating the Boilerplate: `CollectionDataSource` #
+## Encapsulating the Boilerplate: *CollectionDataSource* ##
 
 With the above abstractions in place, it is possible to start implementing a base class that will encapsulate the common boilerplate required to create a data source for a collection view. This is where most of the *“magic”* is going to happen! The main responsibility of this class is to leverage a specific `CollectionDataProvider` and `UICollectionViewCell` to implement what is required to conform to the `UICollectionViewDataSource` protocol. It will also encapsulate some common cell functionality by conforming to the `UICollectionViewDelegate` protocol as well.
 
@@ -239,7 +239,7 @@ A different strategy to achieve the same goal would be to use a custom closure, 
 
 This particular aspect of my implementation is a typical trade-off in software engineering. On one hand — the majority of the details for setting up the data source for a view collection will be hidden (and abstracted away). On the other hand — all functionality that has not been provided as part of the boilerplate will not be available “out-of-the-box” and will require additional customization. Adding new functionality is not overly complicated, but requires implementing more custom code as seen in the two examples above.
 
-# Implementing a Concrete `CollectionDataProvider`: `ArrayDataProvider` #
+## Implementing a Concrete *CollectionDataProvider*: *ArrayDataProvider* ##
 
 Now that the boilerplate is set up, the data source for a collection view is taken care of by means of `CollectionDataSource`. Let’s see how we can take advantage of it for a very common use case. To do that, let’s go back for a moment to the `CollectionDataProvider` protocol. In order to be able to create an instance of `CollectionDataSource`, it is required to provide a concrete implementation of `CollectionDataProvider`. A basic implementation, which covers most of the common use cases, can simply leverage an array type to represent a list of items containing the data to be displayed in the collection view cells. As part of my experimentation with data source abstractions, I made this implementation a little bit more generic and capable of representing:
 
@@ -297,7 +297,7 @@ public class ArrayDataProvider<T>: CollectionDataProvider {
 
 This takes care of abstracting the details of accessing the data source for the most common use cases where a linear data structure can represent the content of the cells.
 
-# Wrapping it All Together: `CollectionArrayDataSource` #
+## Wrapping it All Together: *CollectionArrayDataSource* ##
 
 With the concrete implementation of the `CollectionDataProvider` protocol in place, it is easy to create a subclass of `CollectionDataSource` that leverages it to cover the very common use case where a simple list of items needs to be displayed.
 
@@ -350,7 +350,7 @@ public func updateItem(at indexPath: IndexPath, value: T) {
 
 It just provides a couple of initializers and methods to transparently interact with the provider instance to read and write items from/to the data source.
 
-# Setting up a Basic Collection View #
+## Setting up a Basic Collection View ##
 
 The `CollectionArrayDataSource` base class can be extended to create a specific data source for any collection view that can be represented with an array of items. Here is an example (taken from the *PhotoList sample* available in the [GitHub repo](https://github.com/andrea-prearo/GenericDataSource)):
 
@@ -375,10 +375,12 @@ let dataSource = PhotosDataSource(collectionView: collectionView, array: viewMod
 The collectionView parameter will typically be the outlet pointing to a collection view in a storyboard (`@IBOutlet weak var collectionView: UICollectionView!`).
 
 And that’s it! Two lines of code are sufficient to set up the data source for a basic collection view.
-Setting up a Collection View with Headers and Sections
 
-For a more advanced and complex use case, you could take a look at the *TaskList sample* available in the [GitHub repo](https://github.com/andrea-prearo/GenericDataSource). I am not going into the details of the sample in this article as the content is already quite long. I will likely dive deeper into the topic of *“Collection View with Headers and Sections”* in a next post. On this note, if such a topic would be interesting for you, don’t hesitate to let me know so I can prioritize what to write about next. To get in touch with me, please leave a comment on this post or send an email to: andrea.prearo@gmail.com.
-Conclusion
+## Setting up a Collection View with Headers and Sections ##
+
+For a more advanced and complex use case, you could take a look at the *TaskList sample* available in the [GitHub repo](https://github.com/andrea-prearo/GenericDataSource). I am not going into the details of the sample in this article as the content is already quite long. I will likely dive deeper into the topic of *“Collection View with Headers and Sections”* in a next post. On this note, if such a topic would be interesting for you, don’t hesitate to let me know so I can prioritize what to write about next. To get in touch with me, please leave a comment on this post or send an email to: [andrea.prearo@gmail.com](mailto:andrea.prearo@gmail.com).
+
+## Conclusion ##
 
 In this post I presented some abstractions I built to simplify working with collection views using generic data sources. The proposed implementation is based on use cases that fit recurring patterns I’ve run into during my experience with building iOS apps. Some more advanced use cases would likely require further customization. I believe that it would be possible to adapt the presented abstractions, or build new ones, to simplify working with different collection view patterns. But this is outside the scope of this particular post.
 

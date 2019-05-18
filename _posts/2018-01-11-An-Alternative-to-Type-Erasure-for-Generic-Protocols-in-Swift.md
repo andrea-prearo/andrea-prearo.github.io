@@ -6,7 +6,7 @@ categories: [iOS, Mobile App Development, Swift]
 ---
 *I would like to extend a huge thank you to [Aqeel](https://www.linkedin.com/in/aqeel-gunja-8297647) [Gunja](https://twitter.com/aqgunja) for contributing many of the ideas illustrated in this post.*
 
-# Introduction #
+## Introduction ##
 
 Within the flagship Capital One iOS app, we work with many different types of account — card, bank, investment, etc. There are situations where we want to be able to collect all the information about a customer’s accounts. A typical example would be to calculate the total net worth.
 
@@ -14,7 +14,7 @@ In order to complete tasks similar to the above, I have been working quite a bit
 
 This situation is not unique to banking apps. You may run into the same kind of issues by working on any kind of app, any time you want to retrieve data through a common abstraction (protocol) while, at the same time, requiring to enforce type safety on such data through strong typing. Therefore, I thought I would lay out my learnings from the work we are doing at Capital One so other developers could take advantage of them in their apps.
 
-# Use Case Scenario: A Travel Booking App #
+## Use Case Scenario: A Travel Booking App ##
 
 To illustrate the issues I experienced by means of a simple use case scenario, let’s suppose we are building a travel booking app that allows a user to book flights, hotels and car rentals. The starting point for this exploration is a protocol with associated type:
 
@@ -184,7 +184,7 @@ let bookingCoordinator = BookingCoordinator()
 bookingCoordinator.fetch()
 ~~~
 
-# Do Protocols with Associated Types Support Iteration Out-Of-The-Box? #
+## Do Protocols with Associated Types Support Iteration Out-Of-The-Box? ##
 
 What do you think a good way to retrieve all the booking information would be? Now, for the sake of this article I’ll pretend I never had to deal with some of the intricacies of protocols with associated types in Swift. Instead, I’ll approach the above task from a point of view that should be applicable to any high level programming language.
 
@@ -320,16 +320,14 @@ struct BookingCoordinator {
 ~~~
 
 This works but:
-
 * It doesn’t scale well.
+* It requires a lot of code duplication.
 
-*It requires a lot of code duplication.
-
-# Can Type Erasure Help Out? #
+## Can Type Erasure Help Out? ##
 
 One common way to work around the issues related to protocol with associated types is [*type erasure*](https://www.bignerdranch.com/blog/breaking-down-type-erasures-in-swift/). I’m not going to explain the technique here as the topic deserves its own post. I’m also not going to illustrate the details of my experimentation with type erasure for this particular scenario. What I am just going to say is that my attempts to leverage type erasure to achieve my initial goal (i.e.: *iterate over an array of items conforming to the same protocol with associated type*) weren’t successful.
 
-# An Alternative Approach to Support Iteration for Strong Typed Protocols: Type Wrapping #
+## An Alternative Approach to Support Iteration for Strong Typed Protocols: Type Wrapping ##
 
 After discussing the above issues with some of my coworkers, we found a way to work around the limitations of protocol with associated types as related to iteration. In the rest of this post, I am going to illustrate how we modified the original code to make it support iteration.
 
