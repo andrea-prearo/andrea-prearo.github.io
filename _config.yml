@@ -6,10 +6,11 @@ description: >
   Musings on Software Development
 
 markdown: kramdown
+show_excerpts: false
 
 theme: minima
 minima:
-  # skin: solarized-dark
+  skin: solarized
   social_links:
     github:  andrea-prearo
     linkedin: andreaprearo
