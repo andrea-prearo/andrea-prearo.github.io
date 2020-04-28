@@ -138,6 +138,20 @@ private val client = HttpClient {
 }
 ~~~
 
+---
+**NOTE**
+
+`KotlinxSerializer` uses `strictMode` by default. This means that the deserialization will fail if it encounters unknown keys when parsing the JSON payload. In our scenario, this is not an issue because our models are built to capture all the properties of the JSON object they represent. The default `strictMode` behavior can be turned off by explicitely setting the serializer configuration as follows:
+
+~~~ kotlin
+private val client = HttpClient {
+    install(JsonFeature) {
+        serializer = KotlinxSerializer(Json(JsonConfiguration(strictMode = false)))
+    }
+}
+~~~
+---
+
 The `setupCall` helper method allows us to easily build an `url` instance given the desired endpoint:
 
 ~~~ kotlin
