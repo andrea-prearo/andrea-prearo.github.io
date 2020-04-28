@@ -102,7 +102,7 @@ At this point we have everything we need to mock our HTTP calls. Now we just nee
 
 ## Dependency injenction
 
-In the [previos post](link!) we created a class that encapsulates the JSONPlaceholder API functionality. Such a class is instantiating a private instance of [`HttpClient`](https://api.ktor.io/1.3.1/io.ktor.client/-http-client/index.html), which implements a `HttpClientEngine` interface, to make HTTP calls:
+In the [previous post](link!) we created a class that encapsulates the JSONPlaceholder API functionality. Such a class is instantiating a private instance of [`HttpClient`](https://api.ktor.io/1.3.1/io.ktor.client/-http-client/index.html), which implements a `HttpClientEngine` interface, to make HTTP calls:
 
 ~~~ kotlin
 class Api() {
@@ -186,9 +186,9 @@ class ApiTests {
 }
 ~~~
 
-In above unit tests we are calling the specific method for each wrapped JSONPlaceholder resource. Since we injected the `ApiMockEngine` in the tests we are getting back the corresponding mock response we created earlier. This allows to write assertions to make sure the wrapping method is correcly retrieving and parsing the returned mock response.
+In the above unit tests we are calling the specific method for each wrapped JSONPlaceholder resource. Since we injected the `ApiMockEngine` in the tests we are getting back the corresponding mock response we created earlier. This allows to write assertions to make sure the wrapping method is correcly retrieving and parsing the returned mock response.
 
-For sake of brevity, in the above tests I'm only checking that the number of parsed objects corresponds to the number of objects defined in each mock response. More assertions can be added as neede to thoroughly check that the parsed objects correspond to the objects provided in the mock response.
+For sake of brevity, in the above tests I'm only checking that the number of parsed objects corresponds to the number of objects defined in each mock response. More assertions can be added as needed to thoroughly check that the parsed objects correspond to the objects provided in the mock response.
 
 
 # Conclusion

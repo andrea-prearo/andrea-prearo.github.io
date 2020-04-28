@@ -22,7 +22,7 @@ Each one of the above resources returns a predefined number of JSON objects cont
 
 # Wrapping the `/users` resource
 
-To limit the scope of this posts I'm going to show how it's possible to create a wrapper for the `/users` resource. Such a resource returns the most complex data, which uses nested JSON objects, among the resources provided by JSONPlaceholder. All remaining resources can be wrapped the same way and with less effort since they don't return nested objects.
+To limit the scope of this post I'm going to show how it's possible to create a wrapper for the `/users` resource. Such a resource returns the most complex data, which uses nested JSON objects, among the resources provided by JSONPlaceholder. All remaining resources can be wrapped the same way and with less effort since they don't return nested objects.
 
 
 ## Creating the `User` model
