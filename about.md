@@ -7,8 +7,8 @@ permalink: /about/
 I'm an iOS Engineer and Software Craftsman with extensive expertise in building reusable libraries and components to scale development teams and products.
 
 <br>
-<br>
-<br>
+
+[**Recommended Books**]({% link _about/recommended-books.md %})
 
 ---
 **Opinion Disclaimer**

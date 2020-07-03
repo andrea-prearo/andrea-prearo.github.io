@@ -19,6 +19,9 @@ minima:
 plugins:
   - jekyll-feed
 
+include:
+  - _about
+
 exclude:
   - Gemfile
   - Gemfile.lock
