@@ -22,7 +22,7 @@ exclude_from_nav: true
 
 **Software as a Product**
 * [Working Effectively with Legacy Code](https://www.google.com/books/edition/Working_Effectively_with_Legacy_Code/fB6s_Z6g0gIC?hl=en&gbpv=0)
-* [Beyond Legacy CodeNine Practices to Extend the Life (and Value) of Your Software](https://pragprog.com/book/dblegacy/beyond-legacy-code)
+* [Beyond Legacy Code: Nine Practices to Extend the Life (and Value) of Your Software](https://pragprog.com/book/dblegacy/beyond-legacy-code)
 
 **Distributed Systems**
 * [Designing Elixir Systems with OTP](https://pragprog.com/book/jgotp/designing-elixir-systems-with-otp)
