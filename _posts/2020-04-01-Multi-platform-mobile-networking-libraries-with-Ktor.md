@@ -4,7 +4,7 @@ title: "Multi-platform mobile networking libraries with Ktor"
 date: 2020-03-05
 categories: [KMP, Mobile App Development, Kotlin, Unit Tests]
 ---
-In this post I'm going to illustrate how it's possible to leverage [Ktor](https://ktor.io/) to create a shared mobile library that wraps a REST API. The code I'm going to present here can be hosted inside a Kotlin Multi Platform (a.k.a KMP) project and consumed by any Android and iOS app. For the sake of this post I'm going to target a simple and publicly available API: [JSONPlaceholder](https://jsonplaceholder.typicode.com/).
+In this post I'm going to illustrate how it's possible to leverage [Ktor](https://ktor.io/) to create a shared mobile library that wraps a REST API. The code I'm going to present here can be hosted inside a Kotlin Multi Platform (a.k.a. KMP) project and consumed by any Android and iOS app. For the sake of this post I'm going to target a simple and publicly available API: [JSONPlaceholder](https://jsonplaceholder.typicode.com/).
 
 
 # JSONPlaceholder API Overview
@@ -55,7 +55,7 @@ The `/users` resource returns an array of JSON objects representing fake users. 
 }
 ~~~
 
-We can take advantage of Kotlin's `@Serializable` annotation to create classes to model each user object returned in the JSON. In order to achieve that we are going to need a top level `User` class and a few nested classes (`Address`, `Company` and `Geolocation`):
+We can take advantage of Kotlin's [`@Serializable`](https://github.com/Kotlin/kotlinx.serialization) annotation to create classes to model each user object returned in the JSON. In order to achieve that we are going to need a top level `User` class and a few nested classes (`Address`, `Company` and `Geolocation`):
 
 ~~~ kotlin
 @Serializable
@@ -128,7 +128,7 @@ class Api() {
 
 The `/users` resource is modeled using an `enum class` to encapsulate its details.
 
-Our workhorse is the `Api` class: It uses Ktor's default [`HttpClient`](https://api.ktor.io/1.3.1/io.ktor.client/-http-client/index.html) which will allows us to make HTTP requests. `HttpClient` is highly configurable: In this particular case we are instructing it to use `KotlinxSerializer` to deserialize any HTTP response:
+Our workhorse is the `Api` class: It uses Ktor's default [`HttpClient`](https://api.ktor.io/1.3.2/io.ktor.client/-http-client/index.html) which will allows us to make HTTP requests. `HttpClient` is highly configurable: In this particular case we are instructing it to use `KotlinxSerializer` to deserialize any HTTP response:
 
 ~~~ kotlin
 private val client = HttpClient {
@@ -141,7 +141,7 @@ private val client = HttpClient {
 ---
 **NOTE**
 
-`KotlinxSerializer` uses `strictMode` by default. This means that the deserialization will fail if it encounters unknown keys when parsing the JSON payload. In our scenario, this is not an issue because our models are built to capture all the properties of the JSON object they represent. The default `strictMode` behavior can be turned off by explicitely setting the serializer configuration as follows:
+`KotlinxSerializer` uses `strictMode` by default. This means that the deserialization will fail if it encounters unknown keys when parsing the JSON payload. In our scenario, this is not an issue because our models are built to capture all the properties of the JSON object they represent. The default `strictMode` behavior can be turned off by explicitly setting the serializer configuration as follows:
 
 ~~~ kotlin
 private val client = HttpClient {
