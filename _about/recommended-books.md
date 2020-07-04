@@ -18,7 +18,7 @@ exclude_from_nav: true
 * [The Software Craftsman: Professionalism, Pragmatism, Pride](https://www.google.com/books/edition/The_Software_Craftsman/qqLfBQAAQBAJ?hl=en&gbpv=0)
 * [Clean Code: A Handbook of Agile Software Craftsmanship](https://www.google.com/books/edition/Clean_Code/hjEFCAAAQBAJ?hl=en&gbpv=0)
 * [The Art of UNIX Programming](https://www.google.com/books/edition/The_Art_of_UNIX_Programming/H4q1t-jAcBIC?hl=en&gbpv=0)
-* [The Passionate Programmer: Creating a Remarkable Career in Software Development](https://pragprog.com/book/cfcar2/the-passionate-programmer)
+* [The Passionate Programmer: Creating a Remarkable Career in Software Development](https://pragprog.com/titles/cfcar2/)
 
 **Software as a Product**
 * [Working Effectively with Legacy Code](https://www.google.com/books/edition/Working_Effectively_with_Legacy_Code/fB6s_Z6g0gIC?hl=en&gbpv=0)
@@ -26,7 +26,7 @@ exclude_from_nav: true
 
 **Distributed Systems**
 * [Designing Elixir Systems with OTP](https://pragprog.com/book/jgotp/designing-elixir-systems-with-otp)
-* [Programming Erlang (2nd edition)](https://pragprog.com/book/jaerlang2/programming-erlang)
+* [Programming Erlang (2nd edition)](https://pragprog.com/titles/jaerlang2/)
 
 **Application Architecture**
 * [Designing Data-Intensive Applications (DDIA) — an O’Reilly book by Martin Kleppmann (The Wild Boar Book)](https://dataintensive.net/))
