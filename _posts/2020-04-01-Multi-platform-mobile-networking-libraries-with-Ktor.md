@@ -141,12 +141,27 @@ private val client = HttpClient {
 ---
 **NOTE**
 
-`KotlinxSerializer` uses `strictMode` by default. This means that the deserialization will fail if it encounters unknown keys when parsing the JSON payload. In our scenario, this is not an issue because our models are built to capture all the properties of the JSON object they represent. The default `strictMode` behavior can be turned off by explicitly setting the serializer configuration as follows:
+`KotlinxSerializer` uses strict mode parsing by default. This means that the deserialization will fail if it encounters unknown or malformed keys when parsing the JSON payload. In our scenario, this is not an issue because our models are built to capture all the properties of the JSON object they represent.
+
+The default strict mode parsing behavior can be turned off by explicitly setting the serializer configuration. In earlier versions of `KotlinxSerializer`, the strict mode parsing behavior was determined by a single constructor argument: `strictMode`. The current version of `KotlinxSerializer`, instead, provides three constructor arguments that allow to relax the parsing requirements:
+* [`ignoreUnknownKeys`](https://github.com/Kotlin/kotlinx.serialization/blob/ffe216f0293231b09eea24a10aa4bc26ff6d5b90/runtime/commonMain/src/kotlinx/serialization/json/JsonConfiguration.kt#L17)
+* [`isLenient`](https://github.com/Kotlin/kotlinx.serialization/blob/ffe216f0293231b09eea24a10aa4bc26ff6d5b90/runtime/commonMain/src/kotlinx/serialization/json/JsonConfiguration.kt#L19)
+* [`serializeSpecialFloatingPointValues`](https://github.com/Kotlin/kotlinx.serialization/blob/ffe216f0293231b09eea24a10aa4bc26ff6d5b90/runtime/commonMain/src/kotlinx/serialization/json/JsonConfiguration.kt#L23)
+
+The default strict mode parsing behavior can be turned off by explicitly setting the serializer configuration as follows:
 
 ~~~ kotlin
 private val client = HttpClient {
     install(JsonFeature) {
-        serializer = KotlinxSerializer(Json(JsonConfiguration(strictMode = false)))
+        serializer = KotlinxSerializer(
+            Json(
+                JsonConfiguration(
+                    ignoreUnknownKeys = true,
+                    isLenient = true,
+                    serializeSpecialFloatingPointValues = true
+                )
+            )
+        )
     }
 }
 ~~~
