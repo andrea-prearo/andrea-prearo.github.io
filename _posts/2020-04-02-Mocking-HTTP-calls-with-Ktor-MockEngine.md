@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Mocking HTTP calls with Ktor MockEngine"
-date: 2020-03-06
+date: 2020-08-19
 categories: [KMP, Mobile App Development, Kotlin, Unit Tests]
 ---
 In this post I'm going to illustrate how we can leverage Ktor's [`MockEngine`](https://api.ktor.io/1.3.1/io.ktor.client.engine.mock/-mock-engine/index.html) to create unit tests for HTTP calls. In order to do that, I'm going to build up on the JSONPlaceholder wrapper code from my [previous post](link!).
