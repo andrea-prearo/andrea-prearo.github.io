@@ -4,7 +4,7 @@ title: "Mocking HTTP calls with Ktor MockEngine"
 date: 2020-08-19
 categories: [KMP, Mobile App Development, Kotlin, Unit Tests]
 ---
-In this post I'm going to illustrate how we can leverage Ktor's [`MockEngine`](https://api.ktor.io/1.3.1/io.ktor.client.engine.mock/-mock-engine/index.html) to create unit tests for HTTP calls. In order to do that, I'm going to build up on the JSONPlaceholder wrapper code from my [previous post](link!).
+In this post I'm going to illustrate how we can leverage Ktor's [`MockEngine`](https://api.ktor.io/1.3.1/io.ktor.client.engine.mock/-mock-engine/index.html) to create unit tests for HTTP calls. In order to do that, I'm going to build up on the JSONPlaceholder wrapper code from my [previous post](https://andrea-prearo.github.io/kmp/mobile%20app%20development/kotlin/unit%20tests/2020/07/13/Multi-platform-mobile-networking-libraries-with-Ktor.html).
 
 
 # Mocking JSONPlaceholder API
@@ -100,7 +100,7 @@ At this point we have everything we need to mock our HTTP calls. Now we just nee
 
 ## Dependency injection
 
-In the [previous post](link!) we created a class that encapsulates the JSONPlaceholder API functionality. Such a class is instantiating a private instance of [`HttpClient`](https://api.ktor.io/1.3.2/io.ktor.client/-http-client/index.html), which implements a `HttpClientEngine` interface, to make HTTP calls:
+In the [previous post](https://andrea-prearo.github.io/kmp/mobile%20app%20development/kotlin/unit%20tests/2020/07/13/Multi-platform-mobile-networking-libraries-with-Ktor.html) we created a class that encapsulates the JSONPlaceholder API functionality. Such a class is instantiating a private instance of [`HttpClient`](https://api.ktor.io/1.3.2/io.ktor.client/-http-client/index.html), which implements a `HttpClientEngine` interface, to make HTTP calls:
 
 ~~~ kotlin
 class Api() {
