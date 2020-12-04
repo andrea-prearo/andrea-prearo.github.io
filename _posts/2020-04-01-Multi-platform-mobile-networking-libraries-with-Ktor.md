@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Multi-platform mobile networking libraries with Ktor"
-date: 2020-03-05
+date: 2020-07-13
 categories: [KMP, Mobile App Development, Kotlin, Unit Tests]
 ---
 In this post I'm going to illustrate how it's possible to leverage [Ktor](https://ktor.io/) to create a shared mobile library that wraps a REST API. The code I'm going to present here can be hosted inside a Kotlin Multi Platform (a.k.a. KMP) project and consumed by any Android and iOS app. For the sake of this post I'm going to target a simple and publicly available API: [JSONPlaceholder](https://jsonplaceholder.typicode.com/).
