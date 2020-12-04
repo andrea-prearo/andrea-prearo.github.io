@@ -195,7 +195,7 @@ Each remaining JSONPlaceholder resource (i.e.: posts, comments, ...) can be wrap
 
 # Conclusion
 
-You can find the full code for wrapping JSONPlaceholder [here]().
+You can find the full code for wrapping JSONPlaceholder [here](https://github.com/andrea-prearo/JSONPlaceholderKotlin).
 
 In this post we examined how it's possible to leverage Ktor to nicely wrap a REST API. In particular we saw how we can use Ktor's `HttpClient` to make HTTP requests and `KotlinxSerializer` to deserialize HTTP responses into Kotlin serializable classes.
 
