@@ -12,7 +12,7 @@ theme: minima
 minima:
   skin: solarized
   social_links:
-    github:  andrea-prearo
+    github: andrea-prearo
     linkedin: andreaprearo
     twitter: andrea_prearo
 
