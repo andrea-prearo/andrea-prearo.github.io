@@ -10,7 +10,7 @@ It's been a while since my [previous post on Core Data](https://andrea-prearo.gi
 
 The main change I made over the past two years has been to separate the *domain model* from the *persistence model*. There are a few reasons behind this choice.
 
-First, this helps with having a better separation of concerns. The *domain model* is defined by the API and representend by means of JSON. This means that we can just use barebone structs to represent the entities returned by the API. The *persistence model*, instead, is heavily dependent on the particular persistent storage of choice. In our case the chosen persistent storage is Core Data which, for the purposes of this post, we can consider as an [ORM](https://en.wikipedia.org/wiki/Object%E2%80%93relational_mapping) layer on top of a SQLite database. Of course, we want to make sure we have a 1:1 relationship between the *domain model* and the *persistence model* representing the same entity.
+First, this helps with having a better separation of concerns. The *domain model* is defined by the API and represented by means of JSON. This means that we can just use barebones structs to represent the entities returned by the API. The *persistence model*, instead, is heavily dependent on the particular persistent storage of choice. In our case the chosen persistent storage is Core Data which, for the purposes of this post, we can consider as an [ORM](https://en.wikipedia.org/wiki/Object%E2%80%93relational_mapping) layer on top of a SQLite database. Of course, we want to make sure we have a 1:1 relationship between the *domain model* and the *persistence model* representing the same entity.
 
 Among other things, this separation allows us, to some degree, to change each representation independently. For instance, we could change the details of one of entities persisted in Core Data without having to touch the corresponding *domain model* representation. This could be useful, for instance, if we wanted to use ad hoc types other than the primitive ones from JSON (`bool`, `number`, `string`) for our *persistence model*. On the other hand, though, the model representation is usually changed because of the need to comply with some API update.
 
@@ -161,7 +161,7 @@ extension UserManagedObject: ModelConvertible {
 
 ## Parsing the JSON response and storing users in Core Data
 
-Now that we have fully separated the *domain model* from the *persistence model*, let's see how we can refactor the existing [`UserController`](https://gist.github.com/andrea-prearo/c5bfc26cb927f0e7ad8c46e1cd7bda7b#file-coredatacodable-2-swift) (which is responsible for retriving users data from the API and persisiting it in Core Data). The required changes are rather simple:
+Now that we have fully separated the *domain model* from the *persistence model*, let's see how we can refactor the existing [`UserController`](https://gist.github.com/andrea-prearo/c5bfc26cb927f0e7ad8c46e1cd7bda7b#file-coredatacodable-2-swift) (which is responsible for retrieving users data from the API and persisting it in Core Data). The required changes are rather simple:
 
 ~~~ swift
 func parse(_ jsonData: Data) -> Bool {
@@ -182,7 +182,6 @@ func parse(_ jsonData: Data) -> Bool {
         return false
     }
 }
-
 ~~~
 
 As mentioned earlier, we just need to make sure we're using an appropriate context (one that supports writing to Core Data main context from a background thread) when calling the `toManagedObject` method.

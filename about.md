@@ -4,7 +4,9 @@ title: About
 permalink: /about/
 ---
 
-I'm an iOS Engineer and Software Craftsman with extensive expertise in building reusable libraries and components to scale development teams and products.
+I'm an experienced Mobile Engineer and Software Craftsman with extensive expertise in building reusable libraries and components to scale development teams and products.
+
+My main focus is iOS apps using Swift and Kotlin Multiplatform.
 
 <br>
 
