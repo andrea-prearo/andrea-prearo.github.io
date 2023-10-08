@@ -4,9 +4,13 @@ title: About
 permalink: /about/
 ---
 
-I'm an experienced Mobile Engineer and Software Craftsman with extensive expertise in building reusable libraries and components to scale development teams and products.
+I'm an iOS Engineer with more than a decade of expertise in building software libraries,
+components and applications. My main focus is on implementing proper architectural approaches and best practices that allow development teams to consistently write robust code and easily scale. An integral part of this is also mentoring junior engineers to achieve proficiency with mobile development best practices.
 
-My main focus is iOS apps using Swift and Kotlin Multiplatform.
+I like working in highly collaborative teams and fostering cross-functional collaboration across
+all the stakeholders (product, design and engineering) to ensure we build great products for our users.
+
+When possible, I also enjoy getting out of my comfort zone (iOS) and contributing to building Android apps and microservices.
 
 <br>
 

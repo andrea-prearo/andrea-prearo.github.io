@@ -1,9 +1,9 @@
-title: Musings on Software Development
+title: Notes on Software Development
 author:
   name: andrea-prearo
   email: andrea.prearo@gmail.com
 description: >
-  Musings on Software Development
+  Yet another blog on Software Development 😁
 
 markdown: kramdown
 show_excerpts: false
@@ -14,7 +14,6 @@ minima:
   social_links:
     github: andrea-prearo
     linkedin: andreaprearo
-    twitter: andrea_prearo
 
 plugins:
   - jekyll-feed
