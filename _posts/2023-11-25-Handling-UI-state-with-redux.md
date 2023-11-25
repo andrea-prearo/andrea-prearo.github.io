@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Handling UI state with Redux"
-date: 2023-11-27
+date: 2023-11-25
 categories: [iOS, Mobile App Development, Swift]
 ---
 In the [previous post](https://andrea-prearo.github.io/ios/mobile%20app%20development/swift/2023/10/13/Handling-UI-state-with-finite-state-machines.html) I illustrated how it's possible to handle UI state using a Finite-state Machine.
@@ -66,7 +66,7 @@ extension Store {
 }
 ~~~
 
-The `Store` definition is pretty straightforward, with the generic **reducer** asynchronous method signature `func reduce(state: State, action: Action) async -> State` and the Combine based observable `state`. The `send` method (I personally prefer `send` to the Redux `dispatch` method name) allows to process an `Action` and perform any required state transition.
+The `Store` definition is pretty straightforward, with the generic **reducer** asynchronous method signature `func reduce(state: State, action: Action) async -> State` and the `Combine` based observable `state`. The `send` method (I personally prefer `send` to the Redux `dispatch` method name) allows to process an `Action` and perform any required state transition.
 
 
 ## Modeling the login logic with a Redux Store
