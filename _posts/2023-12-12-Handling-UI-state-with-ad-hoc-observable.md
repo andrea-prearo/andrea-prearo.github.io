@@ -1,19 +1,21 @@
 ---
 layout: post
-title: "Handling UI state: Ad hoc observable state and procedural code"
-date: 2023-12-04
+title: "Handling UI state with an ad hoc observable"
+date: 2023-12-12
 categories: [iOS, Mobile App Development, Swift]
 ---
-In the [previous](https://andrea-prearo.github.io/ios/mobile%20app%20development/swift/2023/10/13/Handling-UI-state-with-finite-state-machines.html) [posts](https://andrea-prearo.github.io/ios/mobile%20app%20development/swift/2023-11-27-Handling-UI-state-with-redux.html) I illustrated how it's possible to handle UI state using, respectively, a Finite-state Machine and a Redux state container.
+In the previous posts I illustrated how it's possible to handle UI state using, respectively, a [Finite-state Machine](https://andrea-prearo.github.io/ios/mobile%20app%20development/swift/2023/10/13/Handling-UI-state-with-finite-state-machines.html) and a [Redux state container](https://andrea-prearo.github.io/ios/mobile%20app%20development/swift/2023/11/25/Handling-UI-state-with-redux.html).
 
-Leveraging either one of the above approaches can help make sure we handle state management in a consistent way and, ideally, make the code easier to test and reason about as well. But sometimes the very prescriptive nature of such approaches, or the the extra complexity they introduce, may feel unnecessary.
+Leveraging either one of the above approaches can help make sure we manage state in a consistent way and, ideally, make the code easier to test and reason about as well. But sometimes the very prescriptive nature of such approaches, or the the extra complexity they introduce, may feel unnecessary.
 
-In this post I'm going to illustrate how we can manage state by means of an ad hoc `Combine` observable and purely procedural code. For easy comparison, I'll be presenting the same use case of the previous posts: A basic login screen implemented in Swift.
+In this post I'm going to illustrate how we can manage state by means of an ad hoc `Combine` observable. For easy comparison, I'll be presenting the same use case of the previous posts: A basic login screen implemented in Swift.
 
 
 ## Converting finite states to properties
 
-The first step in simplifying how we manage state is to convert our finite states to properties.  These are the finite states we used for the previous implementations:
+The first step in simplifying how we manage state is to convert our finite states for the login to properties. Representing the login system as a collection of properties, instead of a series of finite states, should allow us to eliminate the complexity of handling state transitions and just focus on the information the state should convey.
+
+These are the finite states we used for the previous implementations:
 
 ~~~ swift
 case idle
@@ -24,19 +26,17 @@ case authenticated
 case failure(LoginError)
 ~~~
 
-We'll take a look at their purpose and determine:
-* whether we can get rid of a finite state altogether
-* how we can convert a finite state into a property
+We'll take a look at their purpose and determine how we can convert a finite state into a property that conveys the same information or whether we can get rid of a finite state altogether.
 
-`idle` is the initial finite state. We don't need to convert it since we'll be relying on ad hoc properties to represent the state of the login system as a whole. Similarly, we don't need to convert `validatingCredentials` since it served the only purpose to signal that the user started interacting with the login screen.
+`idle` is the initial finite state. We don't need to convert it since we'll be relying on ad hoc properties to represent the state of the login system as a whole. Similarly, we don't need to convert `validatingCredentials` since its only purpose was to signal that the user started interacting with the login screen.
 
-Next, we want to convert `validCredentials` to a property that tells us whether the credentials entered by the user are valid. A simple `var hasValidCredentials: Bool` property should suffice.
+The `validCredentials` finite state tells us whether the credentials entered by the user are valid, so we should convert it to a property that conveys the same information: A `var hasValidCredentials: Bool` property should suffice.
 
-The purpose of `authenticating` was to signal that the app was trying to authenticate the user. We can achieve the same result using a `var isBusy: Bool` property.
+The purpose of `authenticating` was to signal that the app was trying to authenticate the user. We can conveys the same information using a `var isBusy: Bool` property.
 
-Finally, we want to convert the finite states for success and error: `authenticated` and `failure(LoginError)`. We can easily convert them to: `var isAuthenticated: Bool` and `var error: LoginError?`. Of course, in order to behave properly, the state management code will need to enforce these properties to be mutually exclusive since having a successful authentication and an error at the same time would be likely incorrect.
+Finally, we want to convert the finite states for success and error: `authenticated` and `failure(LoginError)`. We can easily convert them to: `var isAuthenticated: Bool` and `var error: LoginError?`. Of course, in order to behave properly, the state management code will need to enforce these properties to be mutually exclusive, since having a successful authentication and an error at the same time would be likely incorrect.
 
-To summarize, here are the properties that will take the place of the finite states:
+To summarize, here are the properties that will convey the same information of the finite states for the login system:
 
 ~~~ swift
 var hasValidCredentials: Bool
@@ -45,7 +45,7 @@ var isAuthenticated: Bool
 var error: LoginError?
 ~~~
 
-Now let's take a look at how we can represent and manage the state by leveraging the above properties (plus some additional ones):
+Now let's take a look at how we can represent and manage the state by leveraging the above properties:
 
 ~~~ swift
 struct LoginState {
@@ -96,12 +96,12 @@ enum LoginError: Error {
 
 We already discussed the purpose and behavior of `hasValidCredentials`, `isBusy`, `isAuthenticated` and `error` earlier.
 
-The `username` and `password` properties will be bound to the UI and used to receive the user input and trigger the proper validation code, as shown in the code above.
+The `username` and `password` properties will be bound to the UI and used to process the user input and trigger the proper validation code, as shown in the code above.
 
 
 ## Leveraging the ad hoc state in the login logic
 
-Now that we've fully defined and implemented our ad hoc state (`LoginState`), the next step is to consume it inside a view model. This one will publish the state as an observable that the screen (view) will leverage to drive the UI behavior.
+Now that we've fully defined and implemented our ad hoc state (`LoginState`), the next step is to wrap it inside a view model, which will publish the state as an observable that the screen (view) will leverage to drive the UI behavior.
 
 Here's the full view model code:
 
@@ -131,7 +131,7 @@ class LoginViewModel: ObservableObject {
 ~~~
 
 As you can notice, the view model is pretty straightforward:
-* it publishes the ad hoc `state` as an observable
+* it publishes the ad hoc `state` as a `Combine` observable
 * it provides the `authenticate()` and `ackError()` methods to interact with the `state`.
 
 The last step is to wire up the login screen (a SwiftUI view) to the view model.
@@ -191,8 +191,9 @@ struct LoginView: View {
 }
 ~~~
 
-As shown above, the view code is pretty much the same we saw in the previous implementations. The only noticeable difference is that the observable `state` is used to drive the UI behavior.
+As shown above, the view code is pretty much the same we used in the previous implementations.
+
 
 ## Conclusion
 
-In this post, I illustrated how it's possible to manage state by means of a `Combine` based ad hoc observable and purely procedural code.  If the complexity of a Redux or FSM based implementation is not your cup of tea, this could be a good way to have a simpler, but still structured approach to state management.
+In this post, I illustrated how it's possible to manage state by means of a `Combine` based ad hoc observable. If the complexity of a Redux or FSM based implementation is not your cup of tea, this approach to state management could be a reasonably good alternative.
