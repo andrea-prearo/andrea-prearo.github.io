@@ -6,16 +6,18 @@ categories: [iOS, Mobile App Development, Swift]
 ---
 In the [previous post](https://andrea-prearo.github.io/ios/mobile%20app%20development/swift/2023/10/13/Handling-UI-state-with-finite-state-machines.html) I illustrated how it's possible to handle UI state using a Finite-state Machine.
 
-For many commons scenarios in mobile applications implementing a full fledged FSM may be overkill. This is because the number of states we usually deal with is relatively small and this doesn't quite justify the additional code and complexity that the FSM requires.
+For many common scenarios in mobile applications implementing a full fledged FSM may be overkill. This is because the number of states we usually deal with is relatively small and this doesn't quite justify the additional code and complexity that the FSM requires.
 
 Another possible approach to properly handle state, with potentially less overhead, is to leverage a [Redux state container](https://redux.js.org/). 
 
 In this post I'm going to present a very simplistic Redux based **state** container implementation. This approach allows to take advantage of Redux prescriptive approach to state management while avoiding the additional complexity of having to introduce **middleware** and **side effects**. I'll be starting from the basic login screen Swift code from the previous post to illustrate the aforementioned approach.
 
+![Redux store](/assets/2023-11-25-Handling-UI-state-with-redux/Redux-store.png)
+
 
 ## Redux and asynchronous calls: Side effects
 
-The core tenet of Redux (and most other unidirectional flow patterns in general) is that state management should happen in the context of a single method (called `reducer`):
+The core tenet of Redux (and most other unidirectional flow patterns in general) is that state management should happen in the context of a single method (called `reducer` in this case):
 
 `reduce: (State, Action) -> State`
 
@@ -23,11 +25,11 @@ Such a method is implemented inside a [`Store`](https://redux.js.org/tutorials/f
 
 This is very similar to what we saw for a FSM, aside from some different terminology: Redux uses the term `Action` instead of `Event` to describe the trigger of a state transition. The state is initialized with a specific value and then each `Action` can trigger the transition to a new `State` value.
 
-So far so good: The **reducer** handles state transitions synchronously and it's easy to understand. But how is it possible to handle asynchronous calls, like making an API call or invoking an OS callback, in the context of Redux? For this scenario, Redux introduces the concept of [**middleware** and **side effects**](https://redux.js.org/tutorials/fundamentals/part-6-async-logic#redux-middleware-and-side-effects):
+So far so good: The **reducer** handles state transitions synchronously and it's easy to understand. But how is it possible to handle asynchronous logic, like making an API call or invoking an OS callback, in the context of Redux? For this scenario, Redux introduces the concept of [**middleware** and **side effects**](https://redux.js.org/tutorials/fundamentals/part-6-async-logic#redux-middleware-and-side-effects):
 
 > By itself, a Redux store doesn't know anything about async logic. It only knows how to synchronously dispatch actions, update the state by calling the root reducer function, and notify the UI that something has changed. Any asynchronicity has to happen outside the store.
 
-The `store` can implement multiple **middleware** and **side effects** methods to define how to handle asynchronous computations:
+The `store` can implement multiple **middleware** and **side effects** methods to define how to handle asynchronous logic:
 
 > Redux middleware provides a third-party extension point between dispatching an action, and the moment it reaches the reducer. People use Redux **middleware** for logging, crash reporting, talking to an asynchronous API, routing, and more.
 
@@ -35,16 +37,16 @@ The `store` can implement multiple **middleware** and **side effects** methods t
 
 Now, this sounds pretty cool. And it can actually be a very powerful mechanism to allow injecting custom behavior in libraries (many networking libraries, for instance, indeed leverage this approach).
 
-But if your use case is much simpler, as it's common in the context of mobile applications, the extra complexity of handing **middleware** and **side effects** is probably not worth. Among other things because it usually ends up making the code harder to read, test, and reason about.
+But if your use case is much simpler, as it's common in the context of mobile applications UI, the extra complexity of handing **middleware** and **side effects** is probably not worth. Among other things because it usually ends up making the code harder to read, test, and reason about.
 
 
 ## A simplified Redux approach: No **middleware**, no **side effects**
 
-So, let's ignore **middleware** and **side effects** and see how we can directly handle asynchronous computations in the context of a **reducer**. One simple way to achieve this is, for instance, to force the **reducer** to always return the new state asynchronously:
+So, let's ignore **middleware** and **side effects** and see how we can directly handle asynchronous logic in the context of a **reducer**. One simple way to achieve this is, for instance, to force the **reducer** to always return the new state asynchronously:
 
 `reduce(State, Action) async -> State`
 
-This, as usually happens, is a trade off: Now we're forced to handle all state transitions as asynchronous, even those that are inherently synchronous. Personally, though, I find the simplicity of this approach is a good enough reason to justify this compromise.
+This, as usually happens, is a trade off: Now we're forced to handle all state transitions asynchronously, even those that are inherently synchronous. Personally, though, I find the simplicity of this approach is a good enough reason to justify this compromise.
 
 Let's now take a look at a possible implementation of the above simplistic approach to a Redux based state container:
 
@@ -318,6 +320,6 @@ As shown in the above code, the view is rather simple and uses the view model to
 
 ## Conclusion
 
-In this post, I illustrated how it's possible to handle UI state using a very simplistic Redux based **state** container implementation. This approach allows us to take advantage of Redux prescriptive approach to state management to make the code easier to read, test, and reason about.
+In this post, I illustrated how it's possible to handle UI state using a very simplistic Redux based **state** container implementation. This approach allows us to take advantage of Redux prescriptive approach to state management to make the code easier to read, test, and reason about, without the overhead of having to introduce middleware and side effects.
 
 The full code is available on [GitHub](https://github.com/andrea-prearo/LoginWithStore).
