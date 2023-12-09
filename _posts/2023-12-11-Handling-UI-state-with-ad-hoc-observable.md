@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Handling UI state with an ad hoc observable"
-date: 2023-12-12
+date: 2023-12-11
 categories: [iOS, Mobile App Development, Swift]
 ---
 In the previous posts I illustrated how it's possible to handle UI state using, respectively, a [Finite-state Machine](https://andrea-prearo.github.io/ios/mobile%20app%20development/swift/2023/10/13/Handling-UI-state-with-finite-state-machines.html) and a [Redux state container](https://andrea-prearo.github.io/ios/mobile%20app%20development/swift/2023/11/25/Handling-UI-state-with-redux.html).
