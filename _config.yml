@@ -10,7 +10,7 @@ show_excerpts: false
 
 theme: minima
 minima:
-  skin: solarized
+  skin: solarized-dark
   social_links:
     github: andrea-prearo
     linkedin: andreaprearo
