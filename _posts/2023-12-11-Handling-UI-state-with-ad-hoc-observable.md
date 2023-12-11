@@ -32,7 +32,7 @@ We'll take a look at their purpose and determine how we can convert a finite sta
 
 The `validCredentials` finite state tells us whether the credentials entered by the user are valid, so we should convert it to a property that conveys the same information: A `var hasValidCredentials: Bool` property should suffice.
 
-The purpose of `authenticating` was to signal that the app was trying to authenticate the user. We can conveys the same information using a `var isBusy: Bool` property.
+The purpose of `authenticating` was to signal that the app was trying to authenticate the user. We can convey the same information using a `var isBusy: Bool` property.
 
 Finally, we want to convert the finite states for success and error: `authenticated` and `failure(LoginError)`. We can easily convert them to: `var isAuthenticated: Bool` and `var error: LoginError?`. Of course, in order to behave properly, the state management code will need to enforce these properties to be mutually exclusive, since having a successful authentication and an error at the same time would be likely incorrect.
 
